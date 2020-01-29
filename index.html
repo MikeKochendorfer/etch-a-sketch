@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pixel-Sketch</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<div id="site-wrapper">
+		<div id="outer-frame">
+			<div id="container">
+			</div>
+			<div id="button-container">
+				<button id="left-button" class="button">Reset</button>
+				<button id="right-button" class="button">Resize</button>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		//Selectors
+		const screenContainer = document.querySelector('#container')
+		const resetButton = document.querySelector('#left-button')
+		const resizeButton = document.querySelector('#right-button')
+
+		//Event Listeners	
+		screenContainer.addEventListener('mouseover', addPaintAbility);
+		resetButton.addEventListener('click', () => {
+			let boxes = document.querySelectorAll('.pixel')
+			boxes.forEach((div) => {
+				div.style.backgroundColor = "rgba(240,240,240,1)";
+			});
+		});
+		resizeButton.addEventListener('click', () => {
+			removeScreenContents();
+			validateScreenSize(number = prompt('Choose a number between 1 and 200.'));
+		});
+
+		//Event handling and helper functions
+		function addPaintAbility(e) {
+			if (e.target !== e.currentTarget) {
+				var box = e.target;
+				box.style.backgroundColor = "black";
+			}
+			e.stopPropagation();
+		}
+
+		function createScreen(number) {
+			for (i=1; i <= (number * number); i++) {
+					div = document.createElement('div');
+					div.className = "pixel";
+					div.style.height = (560 / number).toString() + 'px';
+					div.style.width = (560 / number).toString() + 'px';
+					screenContainer.appendChild(div);
+				};
+		}
+
+		function validateScreenSize(number) {
+			if (number > 0 && number < 201) {
+				createScreen(number);
+			} else {
+				number = prompt('That is not a valid choice: choose a number between 1 and 200.');
+				createScreen(number);
+			}
+		};
+
+		function removeScreenContents() {
+			const pixels = document.querySelectorAll('.pixel');
+			pixels.forEach((div) => {
+				screenContainer.removeChild(div);
+			});
+		};
+		
+		//initialize default screen size to 55X55
+		createScreen(55);
+	</script>
+</body>
+</html>
