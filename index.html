@@ -25,7 +25,9 @@
 
 		//Event Listeners	
 		screenContainer.addEventListener('mouseover', addPaintAbility);
-		resetButton.addEventListener('click', () => {
+		screenContainer.addEventListener('animationend', removeShakeClass);
+		resetButton.addEventListener('click', () => {	
+			screenContainer.className += " shake";
 			let boxes = document.querySelectorAll('.pixel')
 			boxes.forEach((div) => {
 				div.style.backgroundColor = "rgba(240,240,240,1)";
@@ -70,6 +72,11 @@
 				screenContainer.removeChild(div);
 			});
 		};
+
+		function removeShakeClass() {
+			screenContainer.classList.remove("shake");
+		};
+
 		
 		//initialize default screen size to 55X55
 		createScreen(55);
